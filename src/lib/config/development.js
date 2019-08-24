@@ -1,4 +1,4 @@
 module.exports = {
-  API: "http://www.aistan.com.au/api",
+  API: "https://www.aistan.com.au/api",
   port: 3000
 };
