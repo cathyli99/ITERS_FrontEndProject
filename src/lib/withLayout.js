@@ -1,10 +1,10 @@
-import React from 'react';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { purple, green } from '@material-ui/core/colors';
+import React from "react";
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import { purple, green } from "@material-ui/core/colors";
 //import { connect } from 'react-redux';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Header from '../components/header';
-import Footer from '../components/footer';
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Header from "../components/header";
+import Footer from "../components/footer";
 //import actions from './redux/actions';
 
 const mapStateToProps = state => {
@@ -46,8 +46,8 @@ function withRoot(Component) {
             marginTop: 20,
             padding: 30,
             maxWidth: 1000,
-            minHeight: '72vh',
-            margin: '0 auto'
+            minHeight: "72vh",
+            margin: "0 auto"
           }}
         >
           <Component {...props} />
@@ -58,10 +58,10 @@ function withRoot(Component) {
   }
   return App;
 
-//   return connect(
-//     mapStateToProps,
-//     actions
-//   )(App);
+  //   return connect(
+  //     mapStateToProps,
+  //     actions
+  //   )(App);
 }
 
 export default withRoot;

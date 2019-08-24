@@ -1,40 +1,40 @@
-import React, { Component, Fragment } from 'react';
-import { Button, Grid, Typography } from '@material-ui/core';
-import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
-import { withStyles } from '@material-ui/core/styles';
-import withLayout from '../lib/withLayout';
-import restClient from '../lib/restClient';
+import React, { Component, Fragment } from "react";
+import { Button, Grid, Typography } from "@material-ui/core";
+import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
+import { withStyles } from "@material-ui/core/styles";
+import withLayout from "../lib/withLayout";
+import restClient from "../lib/restClient";
 
 const styles = theme => ({
   loginContainer: {
     width: 500,
-    margin: '0 auto',
+    margin: "0 auto",
     paddingLeft: 15,
     paddingRight: 15,
-    textAlign: 'center',
-    [theme.breakpoints.down('sm')]: {
+    textAlign: "center",
+    [theme.breakpoints.down("sm")]: {
       width: 500
     },
-    [theme.breakpoints.down('xs')]: {
-      width: '100%'
+    [theme.breakpoints.down("xs")]: {
+      width: "100%"
     }
   },
   loginButton: {
-    float: 'right',
+    float: "right",
     marginTop: 40
   },
   loginForm: {
     marginTop: 40
   },
   clear: {
-    clear: 'both'
+    clear: "both"
   },
   headline: {
     marginTop: 30,
-    textAlign: 'center'
+    textAlign: "center"
   },
   signupSection: {
-    textAlign: 'center',
+    textAlign: "center",
     marginTop: 10
   },
   signupInLogin: {
@@ -42,7 +42,7 @@ const styles = theme => ({
   },
   hr: {
     border: 0,
-    borderTop: '1px solid #f5f5f5'
+    borderTop: "1px solid #f5f5f5"
   }
 });
 
@@ -50,8 +50,8 @@ class LoginPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      password: '',
+      username: "",
+      password: "",
       submitted: false
     };
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -62,19 +62,22 @@ class LoginPage extends Component {
 
     this.setState({ submitted: true });
     try {
-      const response = await restClient().post('signin', { userName: username, password });
+      const response = await restClient().post("signin", {
+        userName: username,
+        password
+      });
 
       const { token, role, uniqueId } = response.data;
 
       const { authenticate, updateUser, history } = this.props;
-      localStorage.setItem('token', token);
-      localStorage.setItem('uniqueId', uniqueId);
+      localStorage.setItem("token", token);
+      localStorage.setItem("uniqueId", uniqueId);
       authenticate(response.data);
       const profile = await restClient().get(`userprofile/${uniqueId}`);
 
       updateUser({ ...profile.data, role });
 
-      history.push('/');
+      history.push("/");
     } catch (err) {
       console.log(err);
       this.setState({ submitted: false });
@@ -83,7 +86,7 @@ class LoginPage extends Component {
 
   signup = () => {
     const { history } = this.props;
-    history.push('/signup');
+    history.push("/signup");
   };
   render() {
     const { classes } = this.props;
@@ -97,7 +100,11 @@ class LoginPage extends Component {
 
           <Grid container justify="center">
             <Grid item xs={12}>
-              <ValidatorForm className={classes.loginForm} ref="form" onSubmit={this.handleSubmit}>
+              <ValidatorForm
+                className={classes.loginForm}
+                ref="form"
+                onSubmit={this.handleSubmit}
+              >
                 <TextValidator
                   required
                   fullWidth
@@ -107,10 +114,10 @@ class LoginPage extends Component {
                   name="userName"
                   disabled={submitted}
                   value={username}
-                  validators={['required', 'minStringLength:5']}
+                  validators={["required", "minStringLength:5"]}
                   errorMessages={[
-                    'This field is required!',
-                    'Username cannot be shorter than 5 characters!'
+                    "This field is required!",
+                    "Username cannot be shorter than 5 characters!"
                   ]}
                 />
 
@@ -122,10 +129,10 @@ class LoginPage extends Component {
                   onChange={e => this.setState({ password: e.target.value })}
                   name="password"
                   type="password"
-                  validators={['required', 'minStringLength:5']}
+                  validators={["required", "minStringLength:5"]}
                   errorMessages={[
-                    'This field is required',
-                    'Password cannot be shorter than 8 characters!'
+                    "This field is required",
+                    "Password cannot be shorter than 8 characters!"
                   ]}
                   value={password}
                 />

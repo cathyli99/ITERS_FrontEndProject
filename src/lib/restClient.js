@@ -1,11 +1,11 @@
-import axios from 'axios';
-import { API } from './config';
+import axios from "axios";
+import { API } from "./config";
 
 const restClient = () => {
   // Create instance
   const instance = axios.create();
   // const uid = localStorage.getItem('uid');
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   // Set the AUTH token for any request
   instance.interceptors.request.use(axiosConfig => {
     const current = axiosConfig;

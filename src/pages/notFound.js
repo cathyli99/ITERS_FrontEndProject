@@ -1,12 +1,12 @@
-import React, { Fragment } from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import { Typography } from '@material-ui/core';
-import withLayout from '../lib/withLayout';
+import React, { Fragment } from "react";
+import { withStyles } from "@material-ui/core/styles";
+import { Typography } from "@material-ui/core";
+import withLayout from "../lib/withLayout";
 
 const styles = {
   container: {
-    textAlign: 'center',
-    margin: '0 auto'
+    textAlign: "center",
+    margin: "0 auto"
   },
   pageTitle: {
     marginTop: 50

@@ -1,14 +1,14 @@
-import React, { Fragment } from 'react';
-import _ from 'lodash';
-import { AppBar, Toolbar, Button, Grid } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
+import React, { Fragment } from "react";
+import _ from "lodash";
+import { AppBar, Toolbar, Button, Grid } from "@material-ui/core";
+import { withStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
 //import MenuDrop from './menu';
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    backgroundColor: '#1d2126'
+    backgroundColor: "#1d2126"
   },
   grow: {
     flexGrow: 1
@@ -20,11 +20,11 @@ const styles = theme => ({
   logo: {
     width: 200,
     height: 45,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down("sm")]: {
       width: 100,
       height: 22.5
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down("xs")]: {
       width: 100,
       height: 22.5
     }
@@ -33,28 +33,42 @@ const styles = theme => ({
 
 function Header({ classes, user, history, deauthenticate }) {
   const login = () => {
-    history.push('/login');
+    history.push("/login");
   };
   const signup = () => {
-    history.push('/signup');
+    history.push("/signup");
   };
 
   const createACourse = () => {
-    history.push('/create-a-course');
+    history.push("/create-a-course");
   };
   return (
     <AppBar position="static" classes={{ root: classes.root }}>
       <Toolbar>
-        <Grid container direction="row" justify="space-around" alignItems="center">
-          <Grid item sm={7} xs={2} style={{ textAlign: 'left' }}>
+        <Grid
+          container
+          direction="row"
+          justify="space-around"
+          alignItems="center"
+        >
+          <Grid item sm={7} xs={2} style={{ textAlign: "left" }}>
             <Link to="/">
-              <img className={classes.logo} src="/images/white-100@2x.png" alt="Iters" />
+              <img
+                className={classes.logo}
+                src="/images/white-100@2x.png"
+                alt="Iters"
+              />
             </Link>
           </Grid>
-          <Grid item sm={5} xs={10} style={{ textAlign: 'right' }}>
+          <Grid item sm={5} xs={10} style={{ textAlign: "right" }}>
             <Fragment>
-              {!_.isEmpty(user) && user.Role === 'Instructor' && (
-                <Button size="small" color="primary" variant="contained" onClick={createACourse}>
+              {!_.isEmpty(user) && user.Role === "Instructor" && (
+                <Button
+                  size="small"
+                  color="primary"
+                  variant="contained"
+                  onClick={createACourse}
+                >
                   Create a course
                 </Button>
               )}

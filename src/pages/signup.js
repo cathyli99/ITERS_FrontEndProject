@@ -1,27 +1,31 @@
-import React, { Component } from 'react';
-import { Button, Grid, Typography, MenuItem } from '@material-ui/core';
-import { ArrowForward } from '@material-ui/icons';
-import { withStyles } from '@material-ui/core/styles';
-import { TextValidator, SelectValidator, ValidatorForm } from 'react-material-ui-form-validator';
-import withLayout from '../lib/withLayout';
-import restClient from '../lib/restClient';
+import React, { Component } from "react";
+import { Button, Grid, Typography, MenuItem } from "@material-ui/core";
+import { ArrowForward } from "@material-ui/icons";
+import { withStyles } from "@material-ui/core/styles";
+import {
+  TextValidator,
+  SelectValidator,
+  ValidatorForm
+} from "react-material-ui-form-validator";
+import withLayout from "../lib/withLayout";
+import restClient from "../lib/restClient";
 
 const styles = theme => ({
   signupContainer: {
     width: 500,
-    margin: '0 auto',
+    margin: "0 auto",
     paddingLeft: 15,
     paddingRight: 15,
-    textAlign: 'center',
-    [theme.breakpoints.down('sm')]: {
+    textAlign: "center",
+    [theme.breakpoints.down("sm")]: {
       width: 500
     },
-    [theme.breakpoints.down('xs')]: {
-      width: '100%'
+    [theme.breakpoints.down("xs")]: {
+      width: "100%"
     }
   },
   signupButton: {
-    float: 'right',
+    float: "right",
     marginTop: 30
   },
   signupIcon: {
@@ -36,12 +40,12 @@ class SignUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      firstName: '',
-      lastName: '',
-      password: '',
-      role: 'Student',
-      confirmPassword: '',
+      email: "",
+      firstName: "",
+      lastName: "",
+      password: "",
+      role: "Student",
+      confirmPassword: "",
       submitted: false
     };
     this.handleChange = this.handleChange.bind(this);
@@ -49,7 +53,7 @@ class SignUp extends Component {
   }
 
   componentDidMount() {
-    ValidatorForm.addValidationRule('isPasswordMatch', value => {
+    ValidatorForm.addValidationRule("isPasswordMatch", value => {
       const { password } = this.state;
       if (value !== password) {
         return false;
@@ -75,18 +79,21 @@ class SignUp extends Component {
         Role: role
       })
       .then(async () => {
-        const response = await restClient().post('signin', { userName: email, password });
+        const response = await restClient().post("signin", {
+          userName: email,
+          password
+        });
 
         const { token, role, uniqueId } = response.data;
 
         const { authenticate, updateUser, history } = this.props;
-        localStorage.setItem('token', token);
-        localStorage.setItem('uniqueId', uniqueId);
+        localStorage.setItem("token", token);
+        localStorage.setItem("uniqueId", uniqueId);
         authenticate(response.data);
         const profile = await restClient().get(`userprofile/${uniqueId}`);
-  
+
         updateUser({ ...profile.data, role });
-        history.push('/');
+        history.push("/");
       })
       .catch(() => {
         this.setState({ submitted: false });
@@ -95,7 +102,15 @@ class SignUp extends Component {
 
   render() {
     const { classes } = this.props;
-    const { submitted, firstName, lastName, email, role, password, confirmPassword } = this.state;
+    const {
+      submitted,
+      firstName,
+      lastName,
+      email,
+      role,
+      password,
+      confirmPassword
+    } = this.state;
     return (
       <div className={classes.signupContainer}>
         <Typography className={classes.headline} variant="h4" component="h4">
@@ -104,7 +119,11 @@ class SignUp extends Component {
 
         <Grid container justify="center">
           <Grid item xs={12}>
-            <ValidatorForm className={classes.signupForm} ref="form" onSubmit={this.handleSubmit}>
+            <ValidatorForm
+              className={classes.signupForm}
+              ref="form"
+              onSubmit={this.handleSubmit}
+            >
               <TextValidator
                 fullWidth
                 required
@@ -112,11 +131,15 @@ class SignUp extends Component {
                 label="Firstname"
                 onChange={this.handleChange}
                 name="firstName"
-                validators={['required', 'minStringLength:2', 'maxStringLength:32']}
+                validators={[
+                  "required",
+                  "minStringLength:2",
+                  "maxStringLength:32"
+                ]}
                 errorMessages={[
-                  'This field is required',
-                  'Firstname cannot be shortter than 2 characters!',
-                  'Firstname cannot be longer than 32 characters!'
+                  "This field is required",
+                  "Firstname cannot be shortter than 2 characters!",
+                  "Firstname cannot be longer than 32 characters!"
                 ]}
                 value={firstName}
               />
@@ -128,11 +151,15 @@ class SignUp extends Component {
                 label="Lastname"
                 onChange={this.handleChange}
                 name="lastName"
-                validators={['required', 'minStringLength:2', 'maxStringLength:32']}
+                validators={[
+                  "required",
+                  "minStringLength:2",
+                  "maxStringLength:32"
+                ]}
                 errorMessages={[
-                  'This field is required',
-                  'Lastname cannot be shortter than 2 characters!',
-                  'Lastname cannot be longer than 32 characters!'
+                  "This field is required",
+                  "Lastname cannot be shortter than 2 characters!",
+                  "Lastname cannot be longer than 32 characters!"
                 ]}
                 value={lastName}
               />
@@ -145,8 +172,11 @@ class SignUp extends Component {
                 onChange={this.handleChange}
                 name="email"
                 value={email}
-                validators={['required', 'isEmail']}
-                errorMessages={['This field is required!', 'Email address is not valid!']}
+                validators={["required", "isEmail"]}
+                errorMessages={[
+                  "This field is required!",
+                  "Email address is not valid!"
+                ]}
               />
 
               <SelectValidator
@@ -158,8 +188,8 @@ class SignUp extends Component {
                 label="Role"
                 onChange={this.handleChange}
                 value={role}
-                validators={['required']}
-                errorMessages={['This field is required!']}
+                validators={["required"]}
+                errorMessages={["This field is required!"]}
                 helperText="Please select the role?"
               >
                 <MenuItem value="Student">Student</MenuItem>
@@ -175,10 +205,10 @@ class SignUp extends Component {
                 onChange={this.handleChange}
                 name="password"
                 type="password"
-                validators={['required', 'minStringLength:8']}
+                validators={["required", "minStringLength:8"]}
                 errorMessages={[
-                  'This field is required',
-                  'Password cannot be shorter than 8 characters!'
+                  "This field is required",
+                  "Password cannot be shorter than 8 characters!"
                 ]}
                 value={password}
               />
@@ -191,8 +221,11 @@ class SignUp extends Component {
                 onChange={this.handleChange}
                 name="confirmPassword"
                 type="password"
-                validators={['isPasswordMatch', 'required']}
-                errorMessages={['Password mismatch!', 'This field is required!']}
+                validators={["isPasswordMatch", "required"]}
+                errorMessages={[
+                  "Password mismatch!",
+                  "This field is required!"
+                ]}
                 value={confirmPassword}
               />
 
